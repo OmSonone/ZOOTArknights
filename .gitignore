@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+server/.cache
+_shots
+.vite
+.env
+.env.*

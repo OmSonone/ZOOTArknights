@@ -1,0 +1,140 @@
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Neumorphism needs the surface to be the same hue as the page background and
+   two opposing shadows: a dark one (bottom-right) and a light one (top-left).
+   Everything else is derived from these.
+--------------------------------------------------------------------------- */
+
+:root,
+[data-theme="light"] {
+  --bg: #e8ecf2;
+  --bg-sunken: #e0e5ed;
+  --surface: #e8ecf2;
+  --surface-raised: #ecf0f6;
+
+  --text: #2b3341;
+  --text-soft: #5a6577;
+  --text-faint: #8a95a8;
+  --text-invert: #f6f8fc;
+
+  --shadow-dark: rgba(163, 177, 198, 0.62);
+  --shadow-light: rgba(255, 255, 255, 0.95);
+
+  --accent: #ef7b45;
+  --accent-soft: rgba(239, 123, 69, 0.16);
+  --accent-line: rgba(239, 123, 69, 0.5);
+  --accent-text: #cf5f2c;
+
+  --success: #2f9e6b;
+  --success-soft: rgba(47, 158, 107, 0.14);
+  --warning: #c98a15;
+  --warning-soft: rgba(201, 138, 21, 0.15);
+  --danger: #cc4f4f;
+  --danger-soft: rgba(204, 79, 79, 0.14);
+
+  --line: rgba(90, 101, 119, 0.16);
+  --line-strong: rgba(90, 101, 119, 0.28);
+
+  --rarity-1: #9aa4b2;
+  --rarity-2: #b6c72e;
+  --rarity-3: #16a6dd;
+  --rarity-4: #b277bd;
+  --rarity-5: #e2a318;
+  --rarity-6: #ef7238;
+
+  --scrim: rgba(40, 48, 60, 0.34);
+}
+
+[data-theme="dark"] {
+  --bg: #262a31;
+  --bg-sunken: #22262c;
+  --surface: #262a31;
+  --surface-raised: #2a2f37;
+
+  --text: #e7ecf4;
+  --text-soft: #a8b3c4;
+  --text-faint: #78849a;
+  --text-invert: #1b1f25;
+
+  --shadow-dark: rgba(9, 11, 15, 0.72);
+  --shadow-light: rgba(255, 255, 255, 0.055);
+
+  --accent: #f2915f;
+  --accent-soft: rgba(242, 145, 95, 0.14);
+  --accent-line: rgba(242, 145, 95, 0.45);
+  --accent-text: #f5a377;
+
+  --success: #5fbd8f;
+  --success-soft: rgba(95, 189, 143, 0.14);
+  --warning: #e0b055;
+  --warning-soft: rgba(224, 176, 85, 0.15);
+  --danger: #e37d7d;
+  --danger-soft: rgba(227, 125, 125, 0.14);
+
+  --line: rgba(200, 214, 235, 0.1);
+  --line-strong: rgba(200, 214, 235, 0.2);
+
+  --rarity-1: #8f9bab;
+  --rarity-2: #b8c93a;
+  --rarity-3: #38b6e6;
+  --rarity-4: #c184cc;
+  --rarity-5: #f0b32c;
+  --rarity-6: #f58a52;
+
+  --scrim: rgba(8, 10, 14, 0.62);
+}
+
+/* ---------------------------------------------------------------------------
+   Shape, spacing, motion
+--------------------------------------------------------------------------- */
+
+:root {
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+  --r-pill: 999px;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 22px;
+  --sp-6: 30px;
+  --sp-7: 40px;
+
+  --shadow-raised:
+    7px 7px 16px var(--shadow-dark),
+    -7px -7px 16px var(--shadow-light);
+  --shadow-raised-sm:
+    4px 4px 9px var(--shadow-dark),
+    -4px -4px 9px var(--shadow-light);
+  --shadow-raised-lg:
+    12px 12px 26px var(--shadow-dark),
+    -12px -12px 26px var(--shadow-light);
+  --shadow-inset:
+    inset 5px 5px 11px var(--shadow-dark),
+    inset -5px -5px 11px var(--shadow-light);
+  --shadow-inset-sm:
+    inset 3px 3px 6px var(--shadow-dark),
+    inset -3px -3px 6px var(--shadow-light);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 6px 18px rgba(239, 123, 69, 0.22);
+
+  --ease: cubic-bezier(0.32, 0.72, 0.28, 1);
+  --dur: 180ms;
+
+  --font-sans: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
+    sans-serif;
+  --font-num: "Segoe UI Variable", "SF Pro Display", "Inter", system-ui, sans-serif;
+
+  --sidebar-w: 236px;
+  --header-h: 72px;
+  --bottom-nav-h: 74px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+  }
+}
