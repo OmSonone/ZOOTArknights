@@ -106,6 +106,19 @@ Off by default. To keep your save across browsers/devices:
 4. Sign in from **Profile → Cloud save**. The first sign-in uploads your local save; if both sides
    differ you choose which to keep.
 
+## Deploy (Render, free tier)
+
+`render.yaml` runs `npm start` on one service that serves the site and the import API
+(`HOST=0.0.0.0`, port from Render).
+
+1. Render dashboard → **New → Blueprint** → pick this repo.
+2. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` when prompted (optional).
+3. Add `https://<service>.onrender.com/**` to Supabase **Redirect URLs** (and Site URL).
+
+Notes: the free tier sleeps when idle (slow first load) and has limited RAM, so depot OCR
+may be slow. The import API is public once deployed; it stores nothing and only talks to the
+official Yostar hosts.
+
 ## Import from the game
 
 Import is optional, unofficial and only works while the app is served by the local
