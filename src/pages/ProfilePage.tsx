@@ -1,3 +1,4 @@
+import { CloudCard } from "../components/account/CloudCard";
 import { useMemo } from "react";
 import { Page } from "../components/layout/Shell";
 import { Img } from "../components/common/Img";
@@ -104,13 +105,15 @@ export default function ProfilePage() {
   return (
     <Page
       title="Profile"
-      subtitle="Your doctor card, stored only in this browser."
+      subtitle="Your doctor card, stored in this browser, and in the cloud if you sign in."
       actions={
         <Button size="sm" variant="ghost" onClick={copyProfile}>
           Copy profile
         </Button>
       }
     >
+      <CloudCard />
+
       <section className="doctor-card">
         <div className="doctor-card__head">
           <span className="doctor-card__assistant">

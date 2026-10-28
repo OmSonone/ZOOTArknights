@@ -5,6 +5,7 @@ import { Button } from "./components/neu/ui";
 import { Icon } from "./components/neu/Icon";
 import { ZootMark } from "./components/common/ZootMark";
 import { useGameDataContext, GameDataProvider } from "./state/data";
+import { CloudProvider } from "./state/cloud";
 import { StoreProvider } from "./state/store";
 import { ThemeProvider } from "./state/theme";
 import { ToastProvider } from "./state/toast";
@@ -77,6 +78,7 @@ export function App() {
       <ToastProvider>
         <GameDataProvider>
           <StoreProvider>
+            <CloudProvider>
             <DataGate>
               <BrowserRouter>
                 <Shell>
@@ -94,6 +96,7 @@ export function App() {
                 </Shell>
               </BrowserRouter>
             </DataGate>
+            </CloudProvider>
           </StoreProvider>
         </GameDataProvider>
       </ToastProvider>

@@ -95,6 +95,17 @@ fees; promotion LMD is counted once (in the Elite rows, not in level rows).
 Reference numbers for a 6★ E0L1 → E2L90: **1,111,400 EXP**, **1,124,796 leveling LMD**
 + **210,000 promotion LMD**.
 
+## Optional cloud save (Supabase)
+
+Off by default. To keep your save across browsers/devices:
+
+1. Create a Supabase project and run `supabase/schema.sql` in the SQL editor.
+2. Enable the **Discord** and/or **Google** providers (Authentication → Providers) and add
+   your app URL (e.g. `http://localhost:5173`) to the redirect URLs.
+3. Copy `.env.example` to `.env.local`, fill in the project URL and anon key, restart `npm run dev`.
+4. Sign in from **Profile → Cloud save**. The first sign-in uploads your local save; if both sides
+   differ you choose which to keep.
+
 ## Import from the game
 
 Import is optional, unofficial and only works while the app is served by the local

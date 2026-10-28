@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { EXP_ID, LMD_ID } from "../../lib/constants";
 import { formatExact, formatNumber } from "../../lib/format";
-import { battleRecordPlan } from "../../lib/planner";
+import { battleRecordPlan, penguinStatsExport } from "../../lib/planner";
 import type { MaterialPlan } from "../../lib/planner";
-import type { Depot, PlannerSettings } from "../../lib/types";
+import { downloadJson } from "../../lib/storage";
+import type { Depot, GameData, PlannerSettings } from "../../lib/types";
 import { useToast } from "../../state/toast";
 import { ItemIcon } from "../items/ItemIcon";
 import { Badge, Button, Chip, Empty, Stat, Switch } from "../neu/ui";
@@ -11,13 +12,14 @@ import { Badge, Button, Chip, Empty, Stat, Switch } from "../neu/ui";
 interface Props {
   plan: MaterialPlan;
   depot: Depot;
+  data: GameData;
   settings: PlannerSettings;
   onSettingsChange: (patch: Partial<PlannerSettings>) => void;
   goalCount: number;
   onAddGoal: () => void;
 }
 
-export function MaterialsPanel({ plan, depot, settings, onSettingsChange, goalCount, onAddGoal }: Props) {
+export function MaterialsPanel({ plan, depot, data, settings, onSettingsChange, goalCount, onAddGoal }: Props) {
   const { push } = useToast();
   const [onlyMissing, setOnlyMissing] = useState(false);
 
@@ -60,6 +62,20 @@ export function MaterialsPanel({ plan, depot, settings, onSettingsChange, goalCo
     }
   };
 
+  const penguinJson = () => JSON.stringify(penguinStatsExport(plan, depot, data));
+
+  const copyPenguin = async () => {
+    try {
+      await navigator.clipboard.writeText(penguinJson());
+      push("Penguin Statistics JSON copied to clipboard.", "success");
+    } catch {
+      push("Clipboard access was blocked by the browser.", "error");
+    }
+  };
+
+  const downloadPenguin = () =>
+    downloadJson(penguinJson(), `zoot-penguin-stats-${new Date().toISOString().slice(0, 10)}.json`);
+
   return (
     <div className="col" style={{ gap: 16 }}>
       <section className="neu-card col" style={{ gap: 16 }}>
@@ -68,6 +84,12 @@ export function MaterialsPanel({ plan, depot, settings, onSettingsChange, goalCo
           <div className="section-head__actions">
             <Button size="sm" variant="ghost" onClick={copyList}>
               Copy list
+            </Button>
+            <Button size="sm" variant="ghost" onClick={copyPenguin}>
+              Copy Penguin Stats
+            </Button>
+            <Button size="sm" variant="ghost" onClick={downloadPenguin}>
+              Download Penguin Stats
             </Button>
           </div>
         </div>
