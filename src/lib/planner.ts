@@ -426,6 +426,23 @@ export function buildMaterialPlan(
 }
 
 /* ------------------------------------------------------------------ */
+/* Penguin Statistics planner export (same shape as ak-roster)         */
+/* ------------------------------------------------------------------ */
+
+export interface PenguinStatsExport {
+  "@type": "@penguin-statistics/planner/config";
+  items: { id: string; have: number; need: number }[];
+}
+
+export function penguinStatsExport(plan: MaterialPlan, depot: Depot, data: GameData): PenguinStatsExport {
+  const ids = new Set([...Object.keys(depot), ...Object.keys(plan.raw)]);
+  const items = [...ids]
+    .filter((id) => data.itemMap[id])
+    .map((id) => ({ id, have: depot[id] ?? 0, need: plan.raw[id] ?? 0 }));
+  return { "@type": "@penguin-statistics/planner/config", items };
+}
+
+/* ------------------------------------------------------------------ */
 /* EXP -> battle records                                               */
 /* ------------------------------------------------------------------ */
 
