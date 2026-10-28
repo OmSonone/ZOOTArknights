@@ -166,6 +166,7 @@ export default function PlannerPage() {
         <MaterialsPanel
           plan={plan}
           depot={state.depot}
+          data={data}
           settings={state.plannerSettings}
           goalCount={views.length}
           onSettingsChange={(patch) => dispatch({ type: "settings/patch", patch })}

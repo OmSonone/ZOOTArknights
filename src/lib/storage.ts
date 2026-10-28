@@ -263,6 +263,15 @@ export function downloadSave(state: AppState): void {
   URL.revokeObjectURL(url);
 }
 
+export function downloadJson(json: string, filename: string): void {
+  const url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
 export function loadTheme(): Theme {
   const stored = localStorage.getItem(THEME_KEY) ?? localStorage.getItem(LEGACY_THEME_KEY);
   if (stored === "light" || stored === "dark") {

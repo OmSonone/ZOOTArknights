@@ -8,3 +8,4 @@ _shots
 .vite
 .env
 .env.*
+!.env.example
