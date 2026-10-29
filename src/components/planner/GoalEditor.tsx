@@ -30,7 +30,9 @@ const newId = (): string =>
     : `goal_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
 const masteryStart = (op: Operator, skills: number): Record<string, number> =>
-  Object.fromEntries(Array.from({ length: skills }, (_, index) => [String(index), clamp(0, op.masteries[index] ?? 0, 3)]));
+  Object.fromEntries(
+    Array.from({ length: skills }, (_, index) => [String(index), clamp(0, op.masteries[index] ?? 0, 3)]),
+  );
 
 const moduleStart = (op: Operator): Record<string, number> =>
   Object.fromEntries(Object.entries(op.modules).map(([id, level]) => [id, clamp(0, level, 3)]));
@@ -430,8 +432,7 @@ export function GoalEditor({ open, onClose, initialOpId, goal, onSave }: Props) 
               Max everything
             </Chip>
             <span className="hint">
-              {base.elite < 0 ? "Unowned" : `From E${currentElite} L${currentLevel}`} → E{targetElite} L
-              {targetLevel}
+              {base.elite < 0 ? "Unowned" : `From E${currentElite} L${currentLevel}`} → E{targetElite} L{targetLevel}
               {dataOp.rarity > 2 ? ` · SL${targetSkill}` : ""}
             </span>
           </div>

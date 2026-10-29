@@ -57,10 +57,7 @@ export function GoalCard({ view, onEdit, onRemove }: Props) {
   return (
     <article className={`goal-card${complete ? " is-complete" : ""}`}>
       <header className="goal-card__head">
-        <span
-          className="goal-row__avatar"
-          style={{ "--rarity": RARITY_COLORS[op.rarity] } as CSSProperties}
-        >
+        <span className="goal-row__avatar" style={{ "--rarity": RARITY_COLORS[op.rarity] } as CSSProperties}>
           <Img src={avatarUrl(op.op_id, Math.max(op.elite, 0), op.skin)} alt="" />
         </span>
         <div className="goal-card__id">

@@ -52,10 +52,7 @@ export default function ProfilePage() {
   const { push } = useToast();
   const profile = state.profile;
 
-  const operators = useMemo(
-    () => [...data.operators].sort((a, b) => a.name.localeCompare(b.name)),
-    [data.operators],
-  );
+  const operators = useMemo(() => [...data.operators].sort((a, b) => a.name.localeCompare(b.name)), [data.operators]);
 
   const assistant = profile.assistant ? data.operatorMap[profile.assistant] : null;
 
@@ -72,8 +69,7 @@ export default function ProfilePage() {
 
   const patch = (value: Partial<typeof profile>) => dispatch({ type: "profile/patch", patch: value });
 
-  const setSupport = (index: number, slot: SupportSlot | null) =>
-    dispatch({ type: "profile/support", index, slot });
+  const setSupport = (index: number, slot: SupportSlot | null) => dispatch({ type: "profile/support", index, slot });
 
   const updateSupport = (index: number, update: Partial<SupportSlot>) => {
     const current = profile.supports[index];
@@ -125,9 +121,7 @@ export default function ProfilePage() {
           </span>
           <div className="doctor-card__id">
             <span className="doctor-card__name">{profile.name || "Doctor"}</span>
-            <span className="doctor-card__uid">
-              {profile.uid ? `#${profile.uid}` : "UID not set"}
-            </span>
+            <span className="doctor-card__uid">{profile.uid ? `#${profile.uid}` : "UID not set"}</span>
             <div className="doctor-card__meta">
               <Badge tone="accent">{profile.server}</Badge>
               <Badge>Lv {profile.level}</Badge>
@@ -251,16 +245,9 @@ export default function ProfilePage() {
           const slotOp = slot ? data.operatorMap[slot.opId] : null;
           const skillCount = slotOp?.skillData?.length ?? 0;
           return (
-            <div
-              key={index}
-              className="skill-row"
-              style={{ gap: 12 }}
-              aria-label={`Support slot ${index + 1}`}
-            >
+            <div key={index} className="skill-row" style={{ gap: 12 }} aria-label={`Support slot ${index + 1}`}>
               <div className="skill-row__head">
-                <span className="skill-row__icon">
-                  {slotOp ? <Img src={avatarUrl(slotOp.id, 2)} alt="" /> : null}
-                </span>
+                <span className="skill-row__icon">{slotOp ? <Img src={avatarUrl(slotOp.id, 2)} alt="" /> : null}</span>
                 <span className="skill-row__name">
                   Slot {index + 1}
                   {slotOp ? ` · ${slotOp.name}` : ""}

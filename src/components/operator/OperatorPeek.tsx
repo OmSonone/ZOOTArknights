@@ -23,9 +23,7 @@ export function OperatorPeek({ opId, onClose }: Props) {
   const dataOp = opId ? data.operatorMap[opId] : null;
   const saved = opId ? state.roster[opId] : null;
   const owned = Boolean(saved?.potential);
-  const op: OpInfo | null = dataOp
-    ? ({ ...dataOp, ...(saved ?? defaultOperatorObject(dataOp)) } as OpInfo)
-    : null;
+  const op: OpInfo | null = dataOp ? ({ ...dataOp, ...(saved ?? defaultOperatorObject(dataOp)) } as OpInfo) : null;
 
   if (!op) {
     return (
@@ -73,13 +71,7 @@ export function OperatorPeek({ opId, onClose }: Props) {
           </div>
           <div className="peek__row">
             <span className="peek__key">Status</span>
-            <span className="peek__val">
-              {owned ? (
-                <Badge tone="success">Owned</Badge>
-              ) : (
-                <Badge>Not owned</Badge>
-              )}
-            </span>
+            <span className="peek__val">{owned ? <Badge tone="success">Owned</Badge> : <Badge>Not owned</Badge>}</span>
           </div>
           {owned && (
             <>
@@ -111,7 +103,10 @@ export function OperatorPeek({ opId, onClose }: Props) {
           )}
           <div className="peek__row">
             <span className="peek__key">Pools</span>
-            <span className="peek__val" style={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: "flex-end" }}>
+            <span
+              className="peek__val"
+              style={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: "flex-end" }}
+            >
               {op.pools.length > 0 ? op.pools.map((pool) => <Badge key={pool}>{pool}</Badge>) : <span>—</span>}
             </span>
           </div>

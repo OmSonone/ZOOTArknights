@@ -1,6 +1,15 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import type { Dispatch, ReactNode } from "react";
-import type { AppState, Depot, DoctorProfile, Operator, PlannerGoal, PlannerSettings, Roster, SupportSlot } from "../lib/types";
+import type {
+  AppState,
+  Depot,
+  DoctorProfile,
+  Operator,
+  PlannerGoal,
+  PlannerSettings,
+  Roster,
+  SupportSlot,
+} from "../lib/types";
 import { createDefaultState, loadState, saveState } from "../lib/storage";
 
 export type Action =
@@ -85,9 +94,7 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, plannerSettings: { ...state.plannerSettings, ...action.patch } };
     case "settings/craftToggle": {
       const list = state.plannerSettings.craftingItems;
-      const next = list.includes(action.itemId)
-        ? list.filter((id) => id !== action.itemId)
-        : [...list, action.itemId];
+      const next = list.includes(action.itemId) ? list.filter((id) => id !== action.itemId) : [...list, action.itemId];
       return { ...state, plannerSettings: { ...state.plannerSettings, craftingItems: next } };
     }
     case "settings/craftSetAll":

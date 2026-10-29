@@ -383,7 +383,9 @@
   box-shadow:
     2px 2px 5px var(--shadow-dark),
     -2px -2px 5px var(--shadow-light);
-  transition: transform var(--dur) var(--ease), background var(--dur) var(--ease);
+  transition:
+    transform var(--dur) var(--ease),
+    background var(--dur) var(--ease);
 }
 
 .neu-switch[aria-checked="true"] {
@@ -445,12 +447,15 @@
 
 .select {
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--text-faint) 50%),
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--text-faint) 50%),
     linear-gradient(135deg, var(--text-faint) 50%, transparent 50%);
   background-position:
     calc(100% - 19px) calc(50% + 1px),
     calc(100% - 14px) calc(50% + 1px);
-  background-size: 5px 5px, 5px 5px;
+  background-size:
+    5px 5px,
+    5px 5px;
   background-repeat: no-repeat;
   padding-right: 38px;
   cursor: pointer;
@@ -825,7 +830,9 @@
   text-align: left;
   align-items: center;
   gap: 8px;
-  transition: box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition:
+    box-shadow var(--dur) var(--ease),
+    color var(--dur) var(--ease);
 }
 
 .neu-select--sm {
@@ -926,7 +933,9 @@
   font-size: 0.85rem;
   color: var(--text-soft);
   text-align: left;
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
 }
 
 .neu-select__option.is-active,
@@ -1059,7 +1068,9 @@
   background: var(--bg);
   box-shadow: var(--shadow-raised-sm);
   color: var(--text-faint);
-  transition: color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition:
+    color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
 }
 
 .badge__remove:hover {

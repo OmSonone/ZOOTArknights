@@ -79,23 +79,23 @@ export function App() {
         <GameDataProvider>
           <StoreProvider>
             <CloudProvider>
-            <DataGate>
-              <BrowserRouter>
-                <Shell>
-                  <Suspense fallback={<RouteFallback />}>
-                    <Routes>
-                      <Route path="/" element={<RosterPage />} />
-                      <Route path="/collection" element={<CollectionPage />} />
-                      <Route path="/planner" element={<PlannerPage />} />
-                      <Route path="/input" element={<InputPage />} />
-                      <Route path="/import" element={<ImportPage />} />
-                      <Route path="/profile" element={<ProfilePage />} />
-                      <Route path="*" element={<Navigate to="/" replace />} />
-                    </Routes>
-                  </Suspense>
-                </Shell>
-              </BrowserRouter>
-            </DataGate>
+              <DataGate>
+                <BrowserRouter>
+                  <Shell>
+                    <Suspense fallback={<RouteFallback />}>
+                      <Routes>
+                        <Route path="/" element={<RosterPage />} />
+                        <Route path="/collection" element={<CollectionPage />} />
+                        <Route path="/planner" element={<PlannerPage />} />
+                        <Route path="/input" element={<InputPage />} />
+                        <Route path="/import" element={<ImportPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                      </Routes>
+                    </Suspense>
+                  </Shell>
+                </BrowserRouter>
+              </DataGate>
             </CloudProvider>
           </StoreProvider>
         </GameDataProvider>

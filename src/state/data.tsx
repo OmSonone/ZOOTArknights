@@ -39,9 +39,7 @@ export function GameDataProvider({ children }: { children: ReactNode }) {
 
   const status = error ? "error" : data ? "ready" : "loading";
 
-  return (
-    <GameDataContext.Provider value={{ status, data, error, retry }}>{children}</GameDataContext.Provider>
-  );
+  return <GameDataContext.Provider value={{ status, data, error, retry }}>{children}</GameDataContext.Provider>;
 }
 
 export function useGameDataContext(): DataContextValue {

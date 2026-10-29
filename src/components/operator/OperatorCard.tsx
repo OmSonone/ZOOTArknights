@@ -25,9 +25,7 @@ export function OperatorCard({ op, owned, onSelect }: Props) {
       : [];
 
   const modules =
-    owned && op.elite === 2
-      ? (op.moduleData ?? []).filter((mod) => (op.modules[mod.moduleId] ?? 0) > 0)
-      : [];
+    owned && op.elite === 2 ? (op.moduleData ?? []).filter((mod) => (op.modules[mod.moduleId] ?? 0) > 0) : [];
 
   return (
     <button

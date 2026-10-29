@@ -1,10 +1,4 @@
-import {
-  LEGACY_STORAGE_KEY,
-  LEGACY_THEME_KEY,
-  SAVE_VERSION,
-  STORAGE_KEY,
-  THEME_KEY,
-} from "./constants";
+import { LEGACY_STORAGE_KEY, LEGACY_THEME_KEY, SAVE_VERSION, STORAGE_KEY, THEME_KEY } from "./constants";
 import type { AppState, DoctorProfile, PlannerGoal, PlannerSettings } from "./types";
 
 export type Theme = "light" | "dark";
@@ -147,9 +141,7 @@ export function normalizeState(input: unknown): AppState {
       elite: typeof value.elite === "number" ? value.elite : 0,
       level: typeof value.level === "number" ? value.level : 1,
       skill_level: typeof value.skill_level === "number" ? value.skill_level : 1,
-      masteries: Array.isArray(value.masteries)
-        ? value.masteries.map((m) => (typeof m === "number" ? m : 0))
-        : [],
+      masteries: Array.isArray(value.masteries) ? value.masteries.map((m) => (typeof m === "number" ? m : 0)) : [],
       modules: isRecord(value.modules)
         ? Object.fromEntries(
             Object.entries(value.modules).map(([id, level]) => [id, typeof level === "number" ? level : 0]),
@@ -196,9 +188,7 @@ export function normalizeState(input: unknown): AppState {
   const rawSettings = isRecord(input.plannerSettings) ? input.plannerSettings : {};
   const plannerSettings: PlannerSettings = {
     includeCrafting:
-      typeof rawSettings.includeCrafting === "boolean"
-        ? rawSettings.includeCrafting
-        : defaultSettings.includeCrafting,
+      typeof rawSettings.includeCrafting === "boolean" ? rawSettings.includeCrafting : defaultSettings.includeCrafting,
     ignoreLmd: typeof rawSettings.ignoreLmd === "boolean" ? rawSettings.ignoreLmd : defaultSettings.ignoreLmd,
     showBattleRecords:
       typeof rawSettings.showBattleRecords === "boolean"

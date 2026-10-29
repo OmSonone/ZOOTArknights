@@ -9,15 +9,15 @@ under the **BSD Zero Clause License (0BSD)**.
 
 ## What is based on ak-roster
 
-| Area | Description |
-| --- | --- |
-| Game data | Generated JSON files for operators, items, skins and factions (`public/data/*.json`). |
-| Cost tables | Level, EXP, LMD and rarity tables (`src/lib/costTables.ts`). |
-| Operator rules | Promotion, level, skill, mastery, module clamping and gating (`src/lib/operator.ts`). |
+| Area               | Description                                                                                                                               |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Game data          | Generated JSON files for operators, items, skins and factions (`public/data/*.json`).                                                     |
+| Cost tables        | Level, EXP, LMD and rarity tables (`src/lib/costTables.ts`).                                                                              |
+| Operator rules     | Promotion, level, skill, mastery, module clamping and gating (`src/lib/operator.ts`).                                                     |
 | Planner algorithms | Level-cost calculation, goal expansion, material aggregation, crafting expansion, EXP-to-battle-record conversion (`src/lib/planner.ts`). |
-| Yostar login chain | EN/JP/KR authentication flow for game-account import (`server/yostar.mjs`). |
-| Import mapping | Mapping game account data into the save model (`src/lib/gameImport.ts`). |
-| Depot OCR | Uses the same library (`@arkntools/depot-recognition`), adapted for server-side use (`server/depotOcr.mjs`). |
+| Yostar login chain | EN/JP/KR authentication flow for game-account import (`server/yostar.mjs`).                                                               |
+| Import mapping     | Mapping game account data into the save model (`src/lib/gameImport.ts`).                                                                  |
+| Depot OCR          | Uses the same library (`@arkntools/depot-recognition`), adapted for server-side use (`server/depotOcr.mjs`).                              |
 
 ## What is original to ZOOT
 

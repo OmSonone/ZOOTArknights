@@ -89,12 +89,7 @@ interface SegmentedProps<T> {
   ariaLabel?: string;
 }
 
-export function Segmented<T extends string | number>({
-  options,
-  value,
-  onChange,
-  ariaLabel,
-}: SegmentedProps<T>) {
+export function Segmented<T extends string | number>({ options, value, onChange, ariaLabel }: SegmentedProps<T>) {
   return (
     <div className="seg" role="group" aria-label={ariaLabel}>
       {options.map((option) => (
@@ -399,14 +394,7 @@ export function ProgressRing({ value, size = 96, stroke = 9, label, sublabel, co
   return (
     <div style={{ position: "relative", width: size, height: size, flex: "none" }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="var(--bg-sunken)"
-          strokeWidth={stroke}
-        />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--bg-sunken)" strokeWidth={stroke} />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -460,7 +448,11 @@ export function Empty({ icon = "sparkles", title, children }: EmptyProps) {
         <Icon name={icon} size={24} />
       </span>
       <strong style={{ color: "var(--text-soft)", fontWeight: 600 }}>{title}</strong>
-      {children != null && <div className="hint" style={{ maxWidth: 380 }}>{children}</div>}
+      {children != null && (
+        <div className="hint" style={{ maxWidth: 380 }}>
+          {children}
+        </div>
+      )}
     </div>
   );
 }

@@ -23,8 +23,7 @@ export function Img({ src, alt = "", fallback, onError, ...rest }: ImgProps) {
           fontSize: "0.7rem",
           fontWeight: 650,
           letterSpacing: "0.06em",
-          background:
-            "linear-gradient(140deg, var(--surface-raised), var(--bg-sunken))",
+          background: "linear-gradient(140deg, var(--surface-raised), var(--bg-sunken))",
         }}
       >
         {(fallback ?? alt).slice(0, 3).toUpperCase()}

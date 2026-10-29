@@ -104,28 +104,17 @@
   --sp-6: 30px;
   --sp-7: 40px;
 
-  --shadow-raised:
-    7px 7px 16px var(--shadow-dark),
-    -7px -7px 16px var(--shadow-light);
-  --shadow-raised-sm:
-    4px 4px 9px var(--shadow-dark),
-    -4px -4px 9px var(--shadow-light);
-  --shadow-raised-lg:
-    12px 12px 26px var(--shadow-dark),
-    -12px -12px 26px var(--shadow-light);
-  --shadow-inset:
-    inset 5px 5px 11px var(--shadow-dark),
-    inset -5px -5px 11px var(--shadow-light);
-  --shadow-inset-sm:
-    inset 3px 3px 6px var(--shadow-dark),
-    inset -3px -3px 6px var(--shadow-light);
+  --shadow-raised: 7px 7px 16px var(--shadow-dark), -7px -7px 16px var(--shadow-light);
+  --shadow-raised-sm: 4px 4px 9px var(--shadow-dark), -4px -4px 9px var(--shadow-light);
+  --shadow-raised-lg: 12px 12px 26px var(--shadow-dark), -12px -12px 26px var(--shadow-light);
+  --shadow-inset: inset 5px 5px 11px var(--shadow-dark), inset -5px -5px 11px var(--shadow-light);
+  --shadow-inset-sm: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
   --shadow-glow: 0 0 0 1px var(--accent-line), 0 6px 18px rgba(239, 123, 69, 0.22);
 
   --ease: cubic-bezier(0.32, 0.72, 0.28, 1);
   --dur: 180ms;
 
-  --font-sans: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
-    sans-serif;
+  --font-sans: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
   --font-num: "Segoe UI Variable", "SF Pro Display", "Inter", system-ui, sans-serif;
 
   --sidebar-w: 236px;

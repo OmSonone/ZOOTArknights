@@ -22,16 +22,12 @@ export function CloudCard() {
           <Badge>{STATUS_LABEL[status]}</Badge>
         </div>
       </div>
-      {!enabled && (
-        <p className="hint">
-          Cloud sync is not available on this instance.
-        </p>
-      )}
+      {!enabled && <p className="hint">Cloud sync is not available on this instance.</p>}
       {enabled && !user && (
         <>
           <p className="hint">
-            Sign in to keep your save across browsers and devices. Without signing in, your save stays only in
-            this browser.
+            Sign in to keep your save across browsers and devices. Without signing in, your save stays only in this
+            browser.
           </p>
           <div className="row row--wrap" style={{ gap: 10 }}>
             <Button variant="primary" onClick={() => void signIn("discord")}>
@@ -44,9 +40,7 @@ export function CloudCard() {
       {enabled && user && (
         <>
           <div className="row" style={{ gap: 12 }}>
-            {user.avatar && (
-              <img src={user.avatar} alt="" width={36} height={36} style={{ borderRadius: "50%" }} />
-            )}
+            {user.avatar && <img src={user.avatar} alt="" width={36} height={36} style={{ borderRadius: "50%" }} />}
             <div className="col" style={{ gap: 2 }}>
               <strong>{user.name ?? user.email ?? "Signed in"}</strong>
               {user.email && user.name && <span className="hint">{user.email}</span>}

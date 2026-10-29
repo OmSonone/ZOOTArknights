@@ -1,10 +1,4 @@
-import {
-  BATTLE_RECORD_IDS,
-  BATTLE_RECORD_TO_EXP,
-  COST_BY_RARITY,
-  EXP_ID,
-  LMD_ID,
-} from "./constants";
+import { BATTLE_RECORD_IDS, BATTLE_RECORD_TO_EXP, COST_BY_RARITY, EXP_ID, LMD_ID } from "./constants";
 import {
   clamp,
   defaultOperatorObject,
@@ -421,9 +415,7 @@ export function buildMaterialPlan(
     totalLmd,
     totalExp,
     complete: rows.every((row) => parentIds.has(row.id) || isCovered(row)),
-    completeIgnoringLmd: rows.every(
-      (row) => row.id === LMD_ID || parentIds.has(row.id) || row.missing === 0,
-    ),
+    completeIgnoringLmd: rows.every((row) => row.id === LMD_ID || parentIds.has(row.id) || row.missing === 0),
   };
 }
 
@@ -434,12 +426,7 @@ export function buildMaterialPlan(
 /**
  * Check whether the depot has enough ingredients to craft one batch of `itemId`.
  */
-export function canCraftOne(
-  itemId: string,
-  depot: Depot,
-  data: GameData,
-  ignoreLmd: boolean,
-): boolean {
+export function canCraftOne(itemId: string, depot: Depot, data: GameData, ignoreLmd: boolean): boolean {
   const item = data.itemMap[itemId];
   if (!item?.ingredients?.length || isChip(item.name)) return false;
   return item.ingredients.every((ing) => {
@@ -452,11 +439,7 @@ export function canCraftOne(
  * Return a depot patch that deducts one recipe's ingredients and credits the yield.
  * Caller should dispatch `depot/bulk` with the result.
  */
-export function craftOne(
-  itemId: string,
-  depot: Depot,
-  data: GameData,
-): Record<string, number> {
+export function craftOne(itemId: string, depot: Depot, data: GameData): Record<string, number> {
   const item = data.itemMap[itemId];
   if (!item?.ingredients?.length) return {};
   const patch: Record<string, number> = {};
@@ -473,9 +456,7 @@ export function craftOne(
  * Includes every craftable item you need, whether or not the depot covers it,
  * so the user sees the crafting breakdown for everything in their goals.
  */
-export function autoDetectCraftable(
-  plan: MaterialPlan,
-): string[] {
+export function autoDetectCraftable(plan: MaterialPlan): string[] {
   return plan.rows
     .filter((row) => row.canCraft && row.id !== LMD_ID && row.id !== EXP_ID)
     .filter((row) => (plan.raw[row.id] ?? 0) > 0)
@@ -486,9 +467,7 @@ export function autoDetectCraftable(
  * Return all non-chip craftable item IDs present in the game data.
  */
 export function allCraftableIds(data: GameData): string[] {
-  return data.items
-    .filter((item) => (item.ingredients?.length ?? 0) > 0 && !isChip(item.name))
-    .map((item) => item.id);
+  return data.items.filter((item) => (item.ingredients?.length ?? 0) > 0 && !isChip(item.name)).map((item) => item.id);
 }
 
 /* ------------------------------------------------------------------ */

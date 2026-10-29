@@ -78,12 +78,15 @@ export function CloudProvider({ children }: { children: ReactNode }) {
     [userId],
   );
 
-  const adoptRemote = useCallback((remote: RemoteSave) => {
-    syncedJson.current = serializeSave(remote.state);
-    dispatch({ type: "state/replace", state: remote.state });
-    setLastSynced(new Date());
-    setStatus("synced");
-  }, [dispatch]);
+  const adoptRemote = useCallback(
+    (remote: RemoteSave) => {
+      syncedJson.current = serializeSave(remote.state);
+      dispatch({ type: "state/replace", state: remote.state });
+      setLastSynced(new Date());
+      setStatus("synced");
+    },
+    [dispatch],
+  );
 
   const reconcile = useCallback(async () => {
     if (!userId) return;
@@ -143,14 +146,17 @@ export function CloudProvider({ children }: { children: ReactNode }) {
     };
   }, [state, userId, status, push_]);
 
-  const signIn = useCallback<CloudValue["signIn"]>(async (provider) => {
-    if (!supabase) return;
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: window.location.origin + window.location.pathname },
-    });
-    if (error) push(`Could not start ${provider} sign-in: ${error.message}`, "error");
-  }, [push]);
+  const signIn = useCallback<CloudValue["signIn"]>(
+    async (provider) => {
+      if (!supabase) return;
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo: window.location.origin + window.location.pathname },
+      });
+      if (error) push(`Could not start ${provider} sign-in: ${error.message}`, "error");
+    },
+    [push],
+  );
 
   const signOut = useCallback(async () => {
     if (!supabase) return;
@@ -210,8 +216,8 @@ export function CloudProvider({ children }: { children: ReactNode }) {
         }
       >
         <p className="hint">
-          Pick the one to keep. The other is replaced. Tip: export this browser's save from Input first if
-          you are unsure.
+          Pick the one to keep. The other is replaced. Tip: export this browser's save from Input first if you are
+          unsure.
         </p>
       </Dialog>
     </CloudContext.Provider>

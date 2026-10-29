@@ -49,10 +49,14 @@
 @keyframes step-pulse {
   0%,
   100% {
-    box-shadow: var(--shadow-raised-sm), 0 0 0 2px var(--accent-line);
+    box-shadow:
+      var(--shadow-raised-sm),
+      0 0 0 2px var(--accent-line);
   }
   50% {
-    box-shadow: var(--shadow-raised-sm), 0 0 0 5px var(--accent-soft);
+    box-shadow:
+      var(--shadow-raised-sm),
+      0 0 0 5px var(--accent-soft);
   }
 }
 

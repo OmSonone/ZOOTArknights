@@ -4,7 +4,17 @@ import { useSearchParams } from "react-router-dom";
 import { Page } from "../components/layout/Shell";
 import { Img } from "../components/common/Img";
 import { Dialog } from "../components/neu/Dialog";
-import { Badge, Button, Chip, Empty, ProgressRing, SearchInput, Segmented, Stepper, Switch } from "../components/neu/ui";
+import {
+  Badge,
+  Button,
+  Chip,
+  Empty,
+  ProgressRing,
+  SearchInput,
+  Segmented,
+  Stepper,
+  Switch,
+} from "../components/neu/ui";
 import { getMaxPotential, RARITY_COLORS } from "../lib/constants";
 import { avatarUrl, moduleArtUrl, skillUrl, skinAvatarUrl } from "../lib/images";
 import {
@@ -65,10 +75,7 @@ export default function InputPage() {
   const op = dataOp ? (saved ?? defaultOperatorObject(dataOp)) : null;
   const owned = Boolean(op?.potential);
   const skinOptions = useMemo(
-    () =>
-      (opId ? (data.skins[opId] ?? []) : []).filter(
-        (skin) => !(skin.skinName == null && skin.avatarId === opId),
-      ),
+    () => (opId ? (data.skins[opId] ?? []) : []).filter((skin) => !(skin.skinName == null && skin.avatarId === opId)),
     [data.skins, opId],
   );
 
@@ -176,10 +183,7 @@ export default function InputPage() {
         {op && dataOp ? (
           <section className="editor" ref={editorRef}>
             <div className="editor__hero">
-              <span
-                className="editor__art"
-                style={{ "--rarity": RARITY_COLORS[dataOp.rarity] } as CSSProperties}
-              >
+              <span className="editor__art" style={{ "--rarity": RARITY_COLORS[dataOp.rarity] } as CSSProperties}>
                 <Img src={avatarUrl(dataOp.id, Math.max(op.elite, 0), op.skin)} alt={dataOp.name} />
               </span>
               <div className="editor__heading">
@@ -249,7 +253,12 @@ export default function InputPage() {
                       min={1}
                       max={maxLevel(dataOp.rarity, op.elite)}
                       value={op.level}
-                      style={{ ["--fill" as string]: ((op.level - 1) / Math.max(maxLevel(dataOp.rarity, op.elite) - 1, 1)) * 100 } as CSSProperties}
+                      style={
+                        {
+                          ["--fill" as string]:
+                            ((op.level - 1) / Math.max(maxLevel(dataOp.rarity, op.elite) - 1, 1)) * 100,
+                        } as CSSProperties
+                      }
                       onChange={(event) => apply(changeLevel(op, dataOp, Number(event.target.value)))}
                       aria-label="Level"
                     />
@@ -305,9 +314,7 @@ export default function InputPage() {
                               label={`mastery for ${skill.skillName}`}
                             />
                           </div>
-                          {locked && (
-                            <span className="hint">Unlocks at Elite 2 with Skill Level 7.</span>
-                          )}
+                          {locked && <span className="hint">Unlocks at Elite 2 with Skill Level 7.</span>}
                         </div>
                       );
                     })}

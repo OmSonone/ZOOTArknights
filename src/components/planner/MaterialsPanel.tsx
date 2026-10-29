@@ -242,11 +242,13 @@ export function MaterialsPanel({
               <>
                 <Chip pressed={craftAllState !== "off"} onClick={handleCraftAllCycle}>
                   <Icon name="craft" size={14} />
-                  {craftAllState === "off" ? "Crafting: off" : craftAllState === "auto" ? "Crafting: auto" : "Crafting: all"}
+                  {craftAllState === "off"
+                    ? "Crafting: off"
+                    : craftAllState === "auto"
+                      ? "Crafting: auto"
+                      : "Crafting: all"}
                 </Chip>
-                {craftAllState !== "off" && (
-                  <Chip onClick={() => onCraftSetAll([])}>Reset</Chip>
-                )}
+                {craftAllState !== "off" && <Chip onClick={() => onCraftSetAll([])}>Reset</Chip>}
               </>
             )}
             <Chip pressed={onlyMissing} onClick={() => setOnlyMissing((value) => !value)}>
@@ -272,11 +274,7 @@ export function MaterialsPanel({
               const craftable = canCraftOne(row.id, depot, data, settings.ignoreLmd);
               const dimmed = isCrafting && row.isParent && row.missing === 0;
               return (
-                <div
-                  key={row.id}
-                  className="mat-row"
-                  style={dimmed ? { opacity: 0.45 } : undefined}
-                >
+                <div key={row.id} className="mat-row" style={dimmed ? { opacity: 0.45 } : undefined}>
                   <span className="mat-row__icon">
                     <ItemIcon id={row.id} size={40} />
                     {isCrafting && row.isParent && (
@@ -335,52 +333,53 @@ export function MaterialsPanel({
         )}
       </section>
 
-      {settings.includeCrafting && (() => {
-        const recordRows = records.filter((r) => r.need > 0);
-        const farmMats = plan.farmRows.filter((row) => row.id !== EXP_ID);
-        const totalItems = farmMats.length + recordRows.length;
-        if (totalItems === 0) return null;
-        return (
-          <section className="neu-card col" style={{ gap: 12 }}>
-            <div className="section-head">
-              <span className="section-head__title">Farm list</span>
-              <span className="badge">{totalItems} items</span>
-            </div>
-            <div className="mat-table">
-              {recordRows.map((record) => (
-                <div key={record.id} className="mat-row">
-                  <span className="mat-row__icon">
-                    <ItemIcon id={record.id} size={40} />
-                  </span>
-                  <span className="mat-row__name">
-                    <span className="mat-row__title">{DATA_NAME_HACK[record.id] ?? record.id}</span>
-                    <span className="mat-row__craft">
-                      {formatExact(record.value)} EXP each
-                      {record.have > 0 ? ` · ${record.have} in depot` : ""}
+      {settings.includeCrafting &&
+        (() => {
+          const recordRows = records.filter((r) => r.need > 0);
+          const farmMats = plan.farmRows.filter((row) => row.id !== EXP_ID);
+          const totalItems = farmMats.length + recordRows.length;
+          if (totalItems === 0) return null;
+          return (
+            <section className="neu-card col" style={{ gap: 12 }}>
+              <div className="section-head">
+                <span className="section-head__title">Farm list</span>
+                <span className="badge">{totalItems} items</span>
+              </div>
+              <div className="mat-table">
+                {recordRows.map((record) => (
+                  <div key={record.id} className="mat-row">
+                    <span className="mat-row__icon">
+                      <ItemIcon id={record.id} size={40} />
                     </span>
-                  </span>
-                  <span className="mat-row__cell mat-row__cell--danger">×{record.need}</span>
-                </div>
-              ))}
-              {farmMats.map((row) => (
-                <div key={row.id} className="mat-row">
-                  <span className="mat-row__icon">
-                    <ItemIcon id={row.id} size={40} />
-                  </span>
-                  <span className="mat-row__name">
-                    <span className="mat-row__title">{row.item?.name ?? row.id}</span>
-                    <span className="mat-row__craft">
-                      tier {row.item?.tier ?? "?"}
-                      {row.have > 0 ? ` · ${row.have} in depot` : ""}
+                    <span className="mat-row__name">
+                      <span className="mat-row__title">{DATA_NAME_HACK[record.id] ?? record.id}</span>
+                      <span className="mat-row__craft">
+                        {formatExact(record.value)} EXP each
+                        {record.have > 0 ? ` · ${record.have} in depot` : ""}
+                      </span>
                     </span>
-                  </span>
-                  <span className="mat-row__cell mat-row__cell--danger">×{formatExact(row.missing)}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        );
-      })()}
+                    <span className="mat-row__cell mat-row__cell--danger">×{record.need}</span>
+                  </div>
+                ))}
+                {farmMats.map((row) => (
+                  <div key={row.id} className="mat-row">
+                    <span className="mat-row__icon">
+                      <ItemIcon id={row.id} size={40} />
+                    </span>
+                    <span className="mat-row__name">
+                      <span className="mat-row__title">{row.item?.name ?? row.id}</span>
+                      <span className="mat-row__craft">
+                        tier {row.item?.tier ?? "?"}
+                        {row.have > 0 ? ` · ${row.have} in depot` : ""}
+                      </span>
+                    </span>
+                    <span className="mat-row__cell mat-row__cell--danger">×{formatExact(row.missing)}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
     </div>
   );
 }

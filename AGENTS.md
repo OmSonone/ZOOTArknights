@@ -21,17 +21,31 @@ planner with a neumorphic UI. The name is a nod to Closure's replacement for PRT
   Commits should read as if written by the repo owner.
 - Branch convention: `feature/...` (not `devin/...`).
 - Do not commit or push unless the user explicitly asks.
+- **Conventional Commits** enforced by commitlint (husky `commit-msg` hook):
+  `type(scope): subject` — types: `feat`, `fix`, `chore`, `refactor`, `style`, `docs`,
+  `test`, `perf`, `ci`. Scopes (optional): `planner`, `roster`, `input`, `import`,
+  `profile`, `ui`, `store`, `cloud`, `server`.
+- PR titles follow the same format. PR body should include Summary, Changes, and Test plan.
+- Pre-commit hook runs `lint-staged` (Prettier on staged files).
 
 ## Commands
 
 ```bash
 npm install
-npm run dev        # Vite on :5173, mounts /api/import
-npm run build      # tsc -b && vite build
-npm run preview    # serve dist + /api/import (Vite preview)
-npm start          # production local server (dist + /api/import), 127.0.0.1:4173
-npm run typecheck  # tsc -b --noEmit
-npm run update-data# refresh public/data from ak-roster (shallow clone)
+npm run dev          # Vite on :5173, mounts /api/import
+npm run build        # tsc -b && vite build
+npm run preview      # serve dist + /api/import (Vite preview)
+npm start            # production local server (dist + /api/import), 127.0.0.1:4173
+npm run typecheck    # tsc -b --noEmit
+npm run lint         # ESLint on src/
+npm run lint:fix     # ESLint with auto-fix
+npm run format       # Prettier write
+npm run format:check # Prettier check (CI)
+npm test             # vitest run (unit tests)
+npm run test:watch   # vitest in watch mode
+npm run test:coverage# vitest with V8 coverage → coverage/
+npm run test:e2e     # Playwright e2e tests (starts dev server)
+npm run update-data  # refresh public/data from ak-roster (shallow clone)
 ```
 
 `preview` and `start` both require `npm run build` first. `HOST`/`PORT` override the start server.
@@ -67,12 +81,14 @@ A goal is a **target state**, not a single action (similar to Krooster's `GoalDa
 
 ```ts
 interface PlannerGoal {
-  id: string; opId: string; order: number;
-  elite?: number;                  // target promotion
-  level?: number;                  // target level inside target promotion
-  skillLevel?: number;             // 1..7
+  id: string;
+  opId: string;
+  order: number;
+  elite?: number; // target promotion
+  level?: number; // target level inside target promotion
+  skillLevel?: number; // 1..7
   masteries?: Record<string, number>; // skill index -> target mastery 1..3
-  modules?: Record<string, number>;   // moduleId -> target stage 1..3
+  modules?: Record<string, number>; // moduleId -> target stage 1..3
 }
 ```
 
@@ -195,7 +211,7 @@ Rules:
 
 - `server/yostar.mjs` — Yostar EN/JP/KR login chain:
   `yostar/send-code → yostar/get-auth → user/login → u8/user/v1/getToken →
-   account/login → account/syncData`.
+ account/login → account/syncData`.
   Signing constants, headers and endpoints are based on ak-roster's implementation.
 - `server/api.mjs` — `/api/import/{mail,data,depot,health}`; mounted by
   `vite.config.ts` in dev/preview and by `server/serve.mjs` for `npm start`.
@@ -244,12 +260,51 @@ Full details in `NOTICE.md` and the README "Acknowledgments" section.
 - Do not remove attribution. Arknights assets belong to Hypergryph/Studio Montagne;
   this project is unaffiliated.
 
+## Testing
+
+### Unit tests (Vitest)
+
+Tests live in `src/lib/__tests__/`. Run with `npm test` or `npm run test:watch`.
+
+- `planner.test.ts` — golden-value tests for `levelingCost`, `goalView`, `buildMaterialPlan`,
+  crafting functions, battle records, Penguin export. Reference totals from AGENTS.md are
+  used as assertions.
+- `operator.test.ts` — mutation rules: promotion caps, level clamping, mastery gating,
+  ownership changes, `isMaxed`, `completion`.
+- `storage.test.ts` — `normalizeState` validation, legacy goal migration, roster/depot/profile
+  normalization, default state, malformed input handling.
+
+Game data is loaded from `public/data/*.json` via `src/lib/__tests__/fixture.ts` (fs, no network).
+
+Coverage: `npm run test:coverage` → `coverage/` (V8 provider, `src/lib/` only).
+
+### E2E tests (Playwright)
+
+Tests live in `e2e/`. Run with `npm run test:e2e` (starts dev server automatically).
+
+- `smoke.spec.ts` — page loads, navigation, operator card rendering, search filtering,
+  theme toggle, responsive overflow checks (320px, 1440px), export button.
+
+Playwright config: chromium only, headless. CI installs browser deps automatically.
+
+### CI (GitHub Actions)
+
+`.github/workflows/ci.yml` runs on push to `main` and on PRs:
+
+1. **Lint, Typecheck & Build** — `npm run lint`, `format:check`, `typecheck`, `build`
+2. **Unit Tests** — `npm run test:coverage`, uploads coverage artifact
+3. **E2E Tests** — Playwright with chromium, uploads report on failure
+4. **Commit Messages** — commitlint on PR commits
+
 ## Verification checklist
 
 ```bash
+npm run lint
+npm run format:check
 npm run typecheck
 npm run build
-npm run dev    # or npm start after build
+npm test
+npm run test:e2e
 ```
 
 Manual checks worth repeating:
@@ -267,11 +322,11 @@ Manual checks worth repeating:
 
 ## Common tasks
 
-| Task | Files |
-| --- | --- |
+| Task                    | Files                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------ |
 | Add a planner dimension | `types.PlannerGoal`, `planner.goalView`, `GoalEditor`, `GoalCard`, `storage.normalizeGoal` |
-| Change goal costs | `lib/planner.ts` only; re-run the reference comparison |
-| Add a page | `App.tsx`, `Shell.tsx`, `pages/`, `styles/pages.css` |
-| Add an import field | `server/api.mjs` (if needed), `lib/gameImport.ts`, `ImportPage`, store action |
-| Change the save schema | `lib/types.ts`, `lib/storage.ts`, `state/store.tsx`, README |
-| Refresh game data | `npm run update-data` (then rebuild) |
+| Change goal costs       | `lib/planner.ts` only; re-run the reference comparison                                     |
+| Add a page              | `App.tsx`, `Shell.tsx`, `pages/`, `styles/pages.css`                                       |
+| Add an import field     | `server/api.mjs` (if needed), `lib/gameImport.ts`, `ImportPage`, store action              |
+| Change the save schema  | `lib/types.ts`, `lib/storage.ts`, `state/store.tsx`, README                                |
+| Refresh game data       | `npm run update-data` (then rebuild)                                                       |

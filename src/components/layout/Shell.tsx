@@ -78,7 +78,12 @@ function Sidebar() {
         ))}
       </nav>
       <div className="sidebar__foot">
-        <Button variant="ghost" onClick={toggle} block style={{ justifyContent: "flex-start", paddingLeft: 16, gap: 10 }}>
+        <Button
+          variant="ghost"
+          onClick={toggle}
+          block
+          style={{ justifyContent: "flex-start", paddingLeft: 16, gap: 10 }}
+        >
           <Icon name={theme === "dark" ? "sun" : "moon"} size={18} />
           <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
         </Button>
@@ -87,7 +92,9 @@ function Sidebar() {
         </div>
         <div className="sidebar__credit">
           Inspired by{" "}
-          <a href="https://krooster.com" target="_blank" rel="noopener noreferrer">Krooster</a>
+          <a href="https://krooster.com" target="_blank" rel="noopener noreferrer">
+            Krooster
+          </a>
         </div>
       </div>
     </aside>

@@ -121,9 +121,7 @@ export default function ImportPage() {
 
     if (pruneGoals) {
       const roster = options.operators ? mapped.roster : state.roster;
-      const completed = state.goals
-        .filter((goal) => isGoalComplete(goal, roster, data))
-        .map((goal) => goal.id);
+      const completed = state.goals.filter((goal) => isGoalComplete(goal, roster, data)).map((goal) => goal.id);
       if (completed.length > 0) dispatch({ type: "goal/removeMany", ids: completed });
     }
 
@@ -137,10 +135,7 @@ export default function ImportPage() {
     }
 
     setSummary(mapped.summary);
-    push(
-      `Imported ${mapped.summary.operators} operators and ${mapped.summary.depotItems} depot items.`,
-      "success",
-    );
+    push(`Imported ${mapped.summary.operators} operators and ${mapped.summary.depotItems} depot items.`, "success");
   };
 
   const sync = async (useSaved: boolean) => {
@@ -231,8 +226,8 @@ export default function ImportPage() {
           <strong style={{ fontSize: "0.92rem" }}>Unofficial, use at your own risk</strong>
           <p className="hint" style={{ marginTop: 2 }}>
             ZOOT mimics the game login on your own machine. Logging in through Yostar signs the game client out, and
-            Hypergryph/Yostar have not approved tools like this. Your email and code only travel to your device
-            and the official servers — no third party is involved.
+            Hypergryph/Yostar have not approved tools like this. Your email and code only travel to your device and the
+            official servers — no third party is involved.
           </p>
         </div>
       </section>
@@ -246,7 +241,9 @@ export default function ImportPage() {
               { index: 3, label: "Sync", state: step3 },
             ].map((step) => (
               <li key={step.index} className={`is-${step.state}`}>
-                <span className="import-steps__num">{step.state === "done" ? <Icon name="check" size={13} /> : step.index}</span>
+                <span className="import-steps__num">
+                  {step.state === "done" ? <Icon name="check" size={13} /> : step.index}
+                </span>
                 <span className="import-steps__label">{step.label}</span>
               </li>
             ))}
@@ -328,7 +325,9 @@ export default function ImportPage() {
             <label className="import-confirm">
               <Switch checked={confirmed} onChange={setConfirmed} label="Confirmed email binding" />
               <span>
-                <strong style={{ display: "block", fontSize: "0.84rem" }}>This email is bound to my main account</strong>
+                <strong style={{ display: "block", fontSize: "0.84rem" }}>
+                  This email is bound to my main account
+                </strong>
                 <span className="hint">
                   An unbound email makes Yostar create a new level-1 account, which the import rejects.
                 </span>
@@ -501,7 +500,9 @@ export default function ImportPage() {
             </span>
           </div>
           <span className="spacer" />
-          <span className="badge">{shots.length}/{MAX_SCREENSHOTS}</span>
+          <span className="badge">
+            {shots.length}/{MAX_SCREENSHOTS}
+          </span>
         </div>
 
         {shots.length > 0 && (
@@ -547,8 +548,8 @@ export default function ImportPage() {
               <span />
             </div>
             <span className="hint">
-              Scanning {shots.length} screenshot{shots.length === 1 ? "" : "s"} locally. The first run also downloads
-              a few MB of model data.
+              Scanning {shots.length} screenshot{shots.length === 1 ? "" : "s"} locally. The first run also downloads a
+              few MB of model data.
             </span>
           </div>
         )}
@@ -607,7 +608,9 @@ export default function ImportPage() {
         <ol className="hint">
           <li>The local server asks Yostar to email a code to your bound address.</li>
           <li>The code is exchanged for a Yostar token, then for a u8 token and a game login secret.</li>
-          <li>The client calls <code>/account/syncData</code> and maps the response into this save file.</li>
+          <li>
+            The client calls <code>/account/syncData</code> and maps the response into this save file.
+          </li>
           <li>Screenshots are read locally by the Arkntools depot recognizer; nothing is uploaded anywhere.</li>
         </ol>
       </details>

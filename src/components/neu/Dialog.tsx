@@ -37,7 +37,11 @@ export function Dialog({ open, onClose, title, subtitle, children, footer, wide 
           <header className="neu-dialog__head">
             <div className="neu-dialog__title">
               <h2 className="title">{title}</h2>
-              {subtitle != null && <p className="hint" style={{ marginTop: 2 }}>{subtitle}</p>}
+              {subtitle != null && (
+                <p className="hint" style={{ marginTop: 2 }}>
+                  {subtitle}
+                </p>
+              )}
             </div>
             <IconButton icon="close" label="Close" variant="ghost" size="sm" onClick={onClose} />
           </header>

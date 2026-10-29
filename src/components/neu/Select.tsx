@@ -66,9 +66,7 @@ export function Select<T extends string | number>({
     const needle = query.trim().toLowerCase();
     if (!needle) return options;
     return options.filter(
-      (option) =>
-        option.label.toLowerCase().includes(needle) ||
-        option.description?.toLowerCase().includes(needle),
+      (option) => option.label.toLowerCase().includes(needle) || option.description?.toLowerCase().includes(needle),
     );
   }, [options, query]);
 
@@ -101,13 +99,10 @@ export function Select<T extends string | number>({
     setOpen(true);
   }, [computeAnchor, disabled, options, value]);
 
-  const close = useCallback(
-    (refocus = true) => {
-      setOpen(false);
-      if (refocus) triggerRef.current?.focus();
-    },
-    [],
-  );
+  const close = useCallback((refocus = true) => {
+    setOpen(false);
+    if (refocus) triggerRef.current?.focus();
+  }, []);
 
   const choose = useCallback(
     (option: SelectOption<T>) => {
@@ -230,9 +225,7 @@ export function Select<T extends string | number>({
         anchor &&
         createPortal(
           <>
-            {anchor.sheet && (
-              <div className="neu-select__backdrop" onClick={() => close(false)} />
-            )}
+            {anchor.sheet && <div className="neu-select__backdrop" onClick={() => close(false)} />}
             <div
               ref={panelRef}
               className={`neu-select__panel${anchor.sheet ? " neu-select__panel--sheet" : ""}`}
@@ -284,9 +277,7 @@ export function Select<T extends string | number>({
                     {option.icon != null && <span className="neu-select__icon">{option.icon}</span>}
                     <span className="neu-select__option-main">
                       <span className="truncate">{option.label}</span>
-                      {option.description && (
-                        <span className="neu-select__desc truncate">{option.description}</span>
-                      )}
+                      {option.description && <span className="neu-select__desc truncate">{option.description}</span>}
                     </span>
                     {option.value === value && <Icon name="check" size={15} />}
                   </button>

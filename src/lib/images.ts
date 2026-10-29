@@ -43,8 +43,7 @@ export const rankUrl = (skillLevel: number, mastery = 0): string =>
 
 export const eliteUrl = (elite: number): string => url(`elite/${elite}_s_box.webp`);
 
-export const potentialUrl = (potential: number): string =>
-  url(`potential/${Math.min(Math.max(potential, 1), 6)}.webp`);
+export const potentialUrl = (potential: number): string => url(`potential/${Math.min(Math.max(potential, 1), 6)}.webp`);
 
 export const classUrl = (className: string): string => url(`classes/class_${enc(className.toLowerCase())}.webp`);
 

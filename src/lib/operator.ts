@@ -7,11 +7,9 @@ import {
 } from "./constants";
 import type { OpInfo, Operator, OperatorData } from "./types";
 
-export const clamp = (min: number, value: number, max: number): number =>
-  Math.min(Math.max(min, value), max);
+export const clamp = (min: number, value: number, max: number): number => Math.min(Math.max(min, value), max);
 
-export const maxLevel = (rarity: number, elite: number): number =>
-  MAX_LEVEL_BY_RARITY[rarity]?.[elite] ?? 0;
+export const maxLevel = (rarity: number, elite: number): number => MAX_LEVEL_BY_RARITY[rarity]?.[elite] ?? 0;
 
 export const maxPromotion = (rarity: number): number => MAX_PROMOTION_BY_RARITY[rarity] ?? 0;
 
@@ -122,8 +120,7 @@ export function isMaxed(op: OpInfo): boolean {
   if (op.rarity > 2 && op.skill_level !== 7) return false;
   if (maxPromotion(op.rarity) === 2) {
     if (!op.skillData?.every((_, index) => op.masteries[index] === 3)) return false;
-    const modulesComplete =
-      op.moduleData?.every((mod) => mod.isCnOnly || op.modules[mod.moduleId] === 3) ?? true;
+    const modulesComplete = op.moduleData?.every((mod) => mod.isCnOnly || op.modules[mod.moduleId] === 3) ?? true;
     if (!modulesComplete) return false;
   }
   return op.potential === getMaxPotential(op.op_id);

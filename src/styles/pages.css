@@ -352,7 +352,9 @@
   border-radius: var(--r-sm);
   background: var(--surface);
   box-shadow: var(--shadow-raised-sm);
-  transition: box-shadow var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition:
+    box-shadow var(--dur) var(--ease),
+    color var(--dur) var(--ease);
   min-width: 58px;
 }
 
@@ -829,9 +831,7 @@
   position: relative;
   border-radius: var(--r-xl);
   padding: 28px;
-  background:
-    radial-gradient(140% 120% at 12% -10%, var(--surface-raised), transparent 58%),
-    var(--surface);
+  background: radial-gradient(140% 120% at 12% -10%, var(--surface-raised), transparent 58%), var(--surface);
   box-shadow: var(--shadow-raised-lg);
   overflow: hidden;
   display: flex;
@@ -1101,7 +1101,10 @@
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--text-faint);
-  transition: box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition:
+    box-shadow var(--dur) var(--ease),
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
 }
 
 .import-steps li.is-active .import-steps__num {
@@ -1146,7 +1149,9 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: opacity 250ms var(--ease), transform 250ms var(--ease);
+  transition:
+    opacity 250ms var(--ease),
+    transform 250ms var(--ease);
 }
 
 .import-step.is-locked {
@@ -1240,17 +1245,23 @@
   background: var(--bg-sunken);
   box-shadow: var(--shadow-inset);
   cursor: pointer;
-  transition: box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
+  transition:
+    box-shadow var(--dur) var(--ease),
+    background var(--dur) var(--ease);
 }
 
 .ocr-drop:hover,
 .ocr-drop:focus-visible {
-  box-shadow: var(--shadow-inset), inset 0 0 0 1px var(--accent-line);
+  box-shadow:
+    var(--shadow-inset),
+    inset 0 0 0 1px var(--accent-line);
 }
 
 .ocr-drop.is-dragging {
   background: var(--accent-soft);
-  box-shadow: var(--shadow-inset), inset 0 0 0 2px var(--accent-line);
+  box-shadow:
+    var(--shadow-inset),
+    inset 0 0 0 2px var(--accent-line);
 }
 
 .ocr-drop__icon {
@@ -1309,7 +1320,9 @@
   background: var(--surface);
   box-shadow: var(--shadow-raised-sm);
   color: var(--text-soft);
-  transition: color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition:
+    color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
 }
 
 .ocr-thumb__remove:hover {

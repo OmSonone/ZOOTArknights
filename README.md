@@ -14,14 +14,14 @@ For AI agents working on this repo, read **[AGENTS.md](AGENTS.md)** first.
 
 ## Features
 
-| Route | What it does |
-| --- | --- |
-| `/` | **Roster** — all 434 operators with your progress, class/rarity/ownership filters, favourites, `/` search shortcut. |
-| `/collection` | **Collection** — owned-only stats: coverage, rarity donut, class spread, mastery/module investment, missing 6★ list. |
-| `/planner` | **Planner** — target-state goals (E2 L90 + per-skill masteries + modules), aggregated materials, per-item crafting, depot stock, farm list. |
-| `/input` | **Input** — per-operator editor (promotion, level, skill level, each mastery, each module, potential, skins) plus JSON save export/import. |
-| `/import` | **Import** — sync from a Yostar account (EN/JP/KR) and read depot counts from screenshots. |
-| `/profile` | **Profile** — doctor card: name, UID, server, level, onboard date, assistant, three support slots, cloud save. |
+| Route         | What it does                                                                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`           | **Roster** — all 434 operators with your progress, class/rarity/ownership filters, favourites, `/` search shortcut.                         |
+| `/collection` | **Collection** — owned-only stats: coverage, rarity donut, class spread, mastery/module investment, missing 6★ list.                        |
+| `/planner`    | **Planner** — target-state goals (E2 L90 + per-skill masteries + modules), aggregated materials, per-item crafting, depot stock, farm list. |
+| `/input`      | **Input** — per-operator editor (promotion, level, skill level, each mastery, each module, potential, skins) plus JSON save export/import.  |
+| `/import`     | **Import** — sync from a Yostar account (EN/JP/KR) and read depot counts from screenshots.                                                  |
+| `/profile`    | **Profile** — doctor card: name, UID, server, level, onboard date, assistant, three support slots, cloud save.                              |
 
 Other niceties: light/dark themes (OS default, switch in the sidebar or mobile top bar),
 searchable dropdowns with keyboard navigation and a mobile bottom sheet, reduced-motion
@@ -55,23 +55,23 @@ A goal is a **target state**, not a single action:
 
 The planner expands one goal into the rows you need to farm:
 
-| Row | Contents |
-| --- | --- |
-| Elite 1 / Elite 2 | promotion materials + promotion LMD |
+| Row                                   | Contents                                  |
+| ------------------------------------- | ----------------------------------------- |
+| Elite 1 / Elite 2                     | promotion materials + promotion LMD       |
 | Level 1→50 (E0), 1→80 (E1), 1→90 (E2) | EXP + leveling LMD, one row per promotion |
-| Skill Level 1→7 | skill upgrade materials |
-| S1 · … / S2 · … | each mastery is an independent row |
-| LOR-X · … | each module stage is an independent row |
+| Skill Level 1→7                       | skill upgrade materials                   |
+| S1 · … / S2 · …                       | each mastery is an independent row        |
+| LOR-X · …                             | each module stage is an independent row   |
 
 Level caps follow the target promotion and rarity, matching the game:
 
-| Rarity | E0 | E1 | E2 |
-| --- | --- | --- | --- |
-| 6★ | 50 | 80 | 90 |
-| 5★ | 50 | 70 | 80 |
-| 4★ | 45 | 60 | 70 |
-| 3★ | 40 | 55 | 55 |
-| 1–2★ | 30 | — | — |
+| Rarity | E0  | E1  | E2  |
+| ------ | --- | --- | --- |
+| 6★     | 50  | 80  | 90  |
+| 5★     | 50  | 70  | 80  |
+| 4★     | 45  | 60  | 70  |
+| 3★     | 40  | 55  | 55  |
+| 1–2★   | 30  | —   | —   |
 
 Requirements enforced by the editor (and warned about for imported/legacy goals):
 
@@ -86,7 +86,8 @@ Chips are treated as farmable leaves because the chip recipe graph is cyclic. `t
 includes crafting fees; promotion LMD is counted once (in the Elite rows, not in level rows).
 
 Reference numbers for a 6★ E0L1 → E2L90: **1,111,400 EXP**, **1,124,796 leveling LMD**
-+ **210,000 promotion LMD**.
+
+- **210,000 promotion LMD**.
 
 ## Optional cloud save (Supabase)
 
@@ -124,7 +125,7 @@ official Yostar/game endpoints.
    code. Google/Apple sign-ins are not bound emails.
 2. Enter the code. The local server performs the game login chain:
    `yostar/send-code → yostar/get-auth → user/login → u8/user/v1/getToken →
-   account/login → account/syncData`.
+account/login → account/syncData`.
 3. The response is mapped into the save: operators, promotions, levels, skills,
    per-skill masteries, modules, skins, potentials (optionally from tokens), profile,
    supports, depot and LMD.
@@ -143,12 +144,12 @@ is uploaded anywhere. Recognized counts are shown for review before applying.
 
 **Local API**
 
-| Endpoint | Purpose |
-| --- | --- |
-| `POST /api/import/mail` | ask Yostar to email a code |
-| `POST /api/import/data` | email+code login, or reuse a saved token |
-| `POST /api/import/depot` | OCR depot screenshots |
-| `GET /api/import/health` | server/OCR availability |
+| Endpoint                 | Purpose                                  |
+| ------------------------ | ---------------------------------------- |
+| `POST /api/import/mail`  | ask Yostar to email a code               |
+| `POST /api/import/data`  | email+code login, or reuse a saved token |
+| `POST /api/import/depot` | OCR depot screenshots                    |
+| `GET /api/import/health` | server/OCR availability                  |
 
 `npm start` binds to `127.0.0.1` by default so these endpoints are not exposed to the
 LAN (`HOST`/`PORT` can override). A static-only deployment still runs everything except
@@ -193,17 +194,42 @@ are migrated automatically from the old `arknights-adda.*` keys on first load.
 ```json
 {
   "version": 1,
-  "roster": { "char_172_svrash": { "op_id": "char_172_svrash", "favorite": true,
-    "potential": 6, "elite": 2, "level": 90, "skill_level": 7,
-    "masteries": [3, 3, 3], "modules": { "uniequip_002_svrash": 3 }, "skin": null } },
-  "goals": [{ "id": "…", "opId": "char_172_svrash", "order": 1,
-    "elite": 2, "level": 90, "skillLevel": 7,
-    "masteries": { "0": 3 }, "modules": { "uniequip_002_svrash": 3 } }],
+  "roster": {
+    "char_172_svrash": {
+      "op_id": "char_172_svrash",
+      "favorite": true,
+      "potential": 6,
+      "elite": 2,
+      "level": 90,
+      "skill_level": 7,
+      "masteries": [3, 3, 3],
+      "modules": { "uniequip_002_svrash": 3 },
+      "skin": null
+    }
+  },
+  "goals": [
+    {
+      "id": "…",
+      "opId": "char_172_svrash",
+      "order": 1,
+      "elite": 2,
+      "level": 90,
+      "skillLevel": 7,
+      "masteries": { "0": 3 },
+      "modules": { "uniequip_002_svrash": 3 }
+    }
+  ],
   "depot": { "30012": 42, "4001": 1200000 },
-  "profile": { "name": "", "uid": "", "server": "EN", "level": 1, "onboard": "",
-    "assistant": null, "supports": [null, null, null] },
-  "plannerSettings": { "includeCrafting": true, "ignoreLmd": false,
-    "showBattleRecords": true, "craftingItems": [] }
+  "profile": {
+    "name": "",
+    "uid": "",
+    "server": "EN",
+    "level": 1,
+    "onboard": "",
+    "assistant": null,
+    "supports": [null, null, null]
+  },
+  "plannerSettings": { "includeCrafting": true, "ignoreLmd": false, "showBattleRecords": true, "craftingItems": [] }
 }
 ```
 

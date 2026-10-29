@@ -1,13 +1,6 @@
 import { LMD_ID, getMaxPotential } from "./constants";
 import { clamp, maxLevel, maxPromotion, numSkills } from "./operator";
-import type {
-  Depot,
-  DoctorProfile,
-  GameData,
-  Operator,
-  Roster,
-  SupportSlot,
-} from "./types";
+import type { Depot, DoctorProfile, GameData, Operator, Roster, SupportSlot } from "./types";
 
 /* ------------------------------------------------------------------ */
 /* API shapes (subset of what /account/syncData returns)               */
@@ -121,8 +114,7 @@ async function post<T>(route: string, body: unknown): Promise<T> {
   return data;
 }
 
-export const requestCode = (email: string, server: ImportServer) =>
-  post<{ ok: true }>("mail", { email, server });
+export const requestCode = (email: string, server: ImportServer) => post<{ ok: true }>("mail", { email, server });
 
 export const requestAccount = (email: string, code: string, server: ImportServer) =>
   post<GameImportResponse>("data", { email, code, server });
@@ -130,8 +122,7 @@ export const requestAccount = (email: string, code: string, server: ImportServer
 export const requestAccountWithToken = (tokenData: YostarTokenData, server: ImportServer) =>
   post<GameImportResponse>("data", { tokenData, server });
 
-export const requestDepotOcr = (images: string[]) =>
-  post<{ items: Record<string, number> }>("depot", { images });
+export const requestDepotOcr = (images: string[]) => post<{ items: Record<string, number> }>("depot", { images });
 
 /* ------------------------------------------------------------------ */
 /* Credential storage                                                  */
@@ -244,8 +235,7 @@ function mapOperator(
   if (options.applyPotentials && finalPotential < getMaxPotential(opId)) {
     const suffix = opId.split("_").pop();
     const letter = inventory[`voucher_full_${suffix}`] ?? 0;
-    const tokens =
-      (inventory[`p_${opId}`] ?? 0) + (inventory[`class_p_${opId}`] ?? 0);
+    const tokens = (inventory[`p_${opId}`] ?? 0) + (inventory[`class_p_${opId}`] ?? 0);
     if (letter > 0) finalPotential = getMaxPotential(opId);
     else if (tokens > 0) finalPotential = Math.min(finalPotential + tokens, getMaxPotential(opId));
   }
@@ -256,7 +246,8 @@ function mapOperator(
     potential: finalPotential,
     elite,
     level,
-    skill_level: dataOp.rarity > 2 ? clamp(1, asNumber(char.mainSkillLvl, 1), 7) : Math.max(1, asNumber(char.mainSkillLvl, 1)),
+    skill_level:
+      dataOp.rarity > 2 ? clamp(1, asNumber(char.mainSkillLvl, 1), 7) : Math.max(1, asNumber(char.mainSkillLvl, 1)),
     masteries,
     modules,
     skin: skillSkinAvatar(data, opId, char.skinId),

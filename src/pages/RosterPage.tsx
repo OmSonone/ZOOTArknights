@@ -88,9 +88,7 @@ export function RosterPage() {
           );
         case "level":
           return (
-            (b.elite * 1000 + b.level) - (a.elite * 1000 + a.level) ||
-            b.rarity - a.rarity ||
-            a.name.localeCompare(b.name)
+            b.elite * 1000 + b.level - (a.elite * 1000 + a.level) || b.rarity - a.rarity || a.name.localeCompare(b.name)
           );
         case "rarity":
         default:
@@ -135,18 +133,14 @@ export function RosterPage() {
       }
     >
       {stats.owned === 0 && (
-        <section
-          className="neu-card row first-run"
-          style={{ gap: 16, flexWrap: "wrap", padding: "18px 22px" }}
-        >
+        <section className="neu-card row first-run" style={{ gap: 16, flexWrap: "wrap", padding: "18px 22px" }}>
           <span className="empty__icon" style={{ width: 46, height: 46, borderRadius: 15 }}>
             <Icon name="sparkles" size={21} />
           </span>
           <div style={{ minWidth: 0, flex: 1 }}>
             <div style={{ fontWeight: 600 }}>Your roster is empty</div>
             <p className="hint">
-              Nothing is marked as owned yet. Add operators in Input and this page fills in with your
-              progress.
+              Nothing is marked as owned yet. Add operators in Input and this page fills in with your progress.
             </p>
           </div>
           <Button variant="primary" size="sm" onClick={() => navigate("/input")}>
@@ -183,75 +177,74 @@ export function RosterPage() {
           </button>
         </div>
         <div className={`filters__body${filtersOpen ? " is-open" : ""}`}>
-
-        <div className="filters__row">
-          <span className="filters__label">Class</span>
-          <div className="filters__group">
-            {CLASS_LIST.map((className) => (
-              <Chip
-                key={className}
-                pressed={classes.has(className)}
-                onClick={() => setClasses((current) => toggleInSet(current, className))}
-              >
-                <img className="chip-icon" src={classUrl(className)} alt="" />
-                {className}
-              </Chip>
-            ))}
+          <div className="filters__row">
+            <span className="filters__label">Class</span>
+            <div className="filters__group">
+              {CLASS_LIST.map((className) => (
+                <Chip
+                  key={className}
+                  pressed={classes.has(className)}
+                  onClick={() => setClasses((current) => toggleInSet(current, className))}
+                >
+                  <img className="chip-icon" src={classUrl(className)} alt="" />
+                  {className}
+                </Chip>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="filters__row">
-          <span className="filters__label">Rarity</span>
-          <div className="filters__group">
-            {[6, 5, 4, 3, 2, 1].map((rarity) => (
-              <Chip
-                key={rarity}
-                pressed={rarities.has(rarity)}
-                onClick={() => setRarities((current) => toggleInSet(current, rarity))}
-              >
-                <span style={{ color: RARITY_COLORS[rarity] }}>★</span>
-                {rarity}
-              </Chip>
-            ))}
+          <div className="filters__row">
+            <span className="filters__label">Rarity</span>
+            <div className="filters__group">
+              {[6, 5, 4, 3, 2, 1].map((rarity) => (
+                <Chip
+                  key={rarity}
+                  pressed={rarities.has(rarity)}
+                  onClick={() => setRarities((current) => toggleInSet(current, rarity))}
+                >
+                  <span style={{ color: RARITY_COLORS[rarity] }}>★</span>
+                  {rarity}
+                </Chip>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="filters__row">
-          <span className="filters__label">Show</span>
-          <Segmented<OwnedFilter>
-            ariaLabel="Ownership filter"
-            value={ownedFilter}
-            onChange={setOwnedFilter}
-            options={[
-              { label: "All", value: "all" },
-              { label: "Owned", value: "owned" },
-              { label: "Missing", value: "missing" },
-            ]}
-          />
-          <Chip pressed={favoritesOnly} onClick={() => setFavoritesOnly((value) => !value)}>
-            ★ Favorites
-          </Chip>
-          <span className="spacer" />
-          <span className="filters__label">Sort</span>
-          <Select<SortKey>
-            className="roster-sort"
-            size="sm"
-            ariaLabel="Sort operators"
-            value={sort}
-            onChange={setSort}
-            options={[
-              { value: "rarity", label: "Rarity" },
-              { value: "level", label: "Progress" },
-              { value: "name", label: "Name" },
-              { value: "class", label: "Class" },
-            ]}
-          />
-          {filtersActive && (
-            <button type="button" className="neu-btn neu-btn--ghost neu-btn--sm" onClick={clearFilters}>
-              Reset
-            </button>
-          )}
-        </div>
+          <div className="filters__row">
+            <span className="filters__label">Show</span>
+            <Segmented<OwnedFilter>
+              ariaLabel="Ownership filter"
+              value={ownedFilter}
+              onChange={setOwnedFilter}
+              options={[
+                { label: "All", value: "all" },
+                { label: "Owned", value: "owned" },
+                { label: "Missing", value: "missing" },
+              ]}
+            />
+            <Chip pressed={favoritesOnly} onClick={() => setFavoritesOnly((value) => !value)}>
+              ★ Favorites
+            </Chip>
+            <span className="spacer" />
+            <span className="filters__label">Sort</span>
+            <Select<SortKey>
+              className="roster-sort"
+              size="sm"
+              ariaLabel="Sort operators"
+              value={sort}
+              onChange={setSort}
+              options={[
+                { value: "rarity", label: "Rarity" },
+                { value: "level", label: "Progress" },
+                { value: "name", label: "Name" },
+                { value: "class", label: "Class" },
+              ]}
+            />
+            {filtersActive && (
+              <button type="button" className="neu-btn neu-btn--ghost neu-btn--sm" onClick={clearFilters}>
+                Reset
+              </button>
+            )}
+          </div>
         </div>
       </section>
 
@@ -262,12 +255,7 @@ export function RosterPage() {
       ) : (
         <div className="op-grid">
           {filtered.map((op) => (
-            <OperatorCard
-              key={op.op_id}
-              op={op}
-              owned={Boolean(op.potential)}
-              onSelect={setSelected}
-            />
+            <OperatorCard key={op.op_id} op={op} owned={Boolean(op.potential)} onSelect={setSelected} />
           ))}
         </div>
       )}

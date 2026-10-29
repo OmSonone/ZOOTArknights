@@ -288,7 +288,11 @@ export default function CollectionPage() {
                     boxShadow: "var(--shadow-inset-sm)",
                   }}
                 >
-                  <Img src={avatarUrl(op.op_id, 0)} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <Img
+                    src={avatarUrl(op.op_id, 0)}
+                    alt=""
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
                 </span>
                 {op.name}
               </button>
