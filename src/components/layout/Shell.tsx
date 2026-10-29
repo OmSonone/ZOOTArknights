@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Icon } from "../neu/Icon";
@@ -106,6 +106,34 @@ function BottomNav() {
   );
 }
 
+function ScrollTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 500);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const toTop = () =>
+    window.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
+
+  return (
+    <IconButton
+      className={`scroll-top${visible ? " is-visible" : ""}`}
+      icon="arrowUp"
+      label="Scroll to top"
+      onClick={toTop}
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
+    />
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
   const location = useLocation();
 
@@ -131,6 +159,7 @@ export function Shell({ children }: { children: ReactNode }) {
         {children}
         <BottomNav />
       </div>
+      <ScrollTop />
     </div>
   );
 }
@@ -147,6 +176,9 @@ export function Page({ title, subtitle, actions, children }: PageProps) {
   return (
     <>
       <header className="topbar">
+        <div className="topbar__brand">
+          <Brand />
+        </div>
         <div className="topbar__titles">
           <h1 className="topbar__title">{title}</h1>
           {subtitle != null && <p className="topbar__sub">{subtitle}</p>}
