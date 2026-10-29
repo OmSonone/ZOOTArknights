@@ -186,6 +186,10 @@
   backdrop-filter: blur(6px);
 }
 
+.topbar__brand {
+  display: none;
+}
+
 .topbar__titles {
   display: flex;
   flex-direction: column;
@@ -239,6 +243,29 @@
   }
 }
 
+/* ---------- Scroll to top ---------- */
+
+.scroll-top {
+  position: fixed;
+  z-index: 40;
+  right: 18px;
+  bottom: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow-raised);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 180ms var(--ease),
+    transform 180ms var(--ease);
+}
+
+.scroll-top.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
 /* ---------- Bottom nav (mobile) ---------- */
 
 .bottom-nav {
@@ -264,6 +291,22 @@
     flex-wrap: wrap;
   }
 
+  .topbar__brand {
+    display: block;
+    flex: 1 1 100%;
+  }
+
+  .topbar__brand .brand {
+    padding: 0;
+    gap: 10px;
+  }
+
+  .topbar__brand .brand__mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
   .topbar__titles {
     flex: 1 1 100%;
   }
@@ -281,6 +324,11 @@
   .content {
     padding: 0 14px 26px;
     gap: var(--sp-4);
+  }
+
+  .scroll-top {
+    right: 14px;
+    bottom: calc(var(--bottom-nav-h) + 18px + env(safe-area-inset-bottom));
   }
 
   .bottom-nav {
