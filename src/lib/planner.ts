@@ -36,7 +36,7 @@ export interface LevelingCost {
   eliteLmd: number;
 }
 
-/** LEVELING cost for a range inside one or more promotions (ported from ak-roster). */
+/** LEVELING cost for a range inside one or more promotions (based on ak-roster). */
 export function levelingCost(
   rarity: number,
   fromElite: number,
@@ -108,7 +108,7 @@ export const resolveOperator = (data: GameData, roster: Roster, opId: string): O
 };
 
 /**
- * Expands one target-state goal into the same per-category rows krooster shows:
+ * Expands one target-state goal into per-category task rows:
  * every promotion crossed, every level range per promotion, skill level, each
  * mastery and each module independently.
  */
@@ -343,9 +343,10 @@ export function buildMaterialPlan(
   const expanded: Record<string, number> = { ...raw };
   const crafts: Record<string, number> = {};
 
-  if (settings.includeCrafting) {
+  if (settings.includeCrafting && settings.craftingItems.length > 0) {
+    const craftSet = new Set(settings.craftingItems);
     const queue = Object.keys(expanded)
-      .filter((id) => (data.itemMap[id]?.ingredients?.length ?? 0) > 0)
+      .filter((id) => craftSet.has(id) && (data.itemMap[id]?.ingredients?.length ?? 0) > 0)
       .sort((a, b) => tierOf(data, b) - tierOf(data, a));
     const expandedIds = new Set<string>();
 
@@ -357,6 +358,7 @@ export function buildMaterialPlan(
       if (!item?.ingredients?.length) continue;
       if (id === LMD_ID || id === EXP_ID) continue;
       if (isChip(item.name)) continue;
+      if (!craftSet.has(id)) continue;
 
       const shortfall = (expanded[id] ?? 0) - (depot[id] ?? 0);
       if (shortfall <= 0) continue;
@@ -369,7 +371,7 @@ export function buildMaterialPlan(
       for (const ingredient of item.ingredients) {
         if (ingredient.id === LMD_ID && settings.ignoreLmd) continue;
         expanded[ingredient.id] = (expanded[ingredient.id] ?? 0) + ingredient.quantity * times;
-        if (!expandedIds.has(ingredient.id)) queue.push(ingredient.id);
+        if (!expandedIds.has(ingredient.id) && craftSet.has(ingredient.id)) queue.push(ingredient.id);
       }
     }
   }
@@ -426,7 +428,71 @@ export function buildMaterialPlan(
 }
 
 /* ------------------------------------------------------------------ */
-/* Penguin Statistics planner export (same shape as ak-roster)         */
+/* Per-item crafting helpers                                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Check whether the depot has enough ingredients to craft one batch of `itemId`.
+ */
+export function canCraftOne(
+  itemId: string,
+  depot: Depot,
+  data: GameData,
+  ignoreLmd: boolean,
+): boolean {
+  const item = data.itemMap[itemId];
+  if (!item?.ingredients?.length || isChip(item.name)) return false;
+  return item.ingredients.every((ing) => {
+    if (ing.id === LMD_ID && ignoreLmd) return true;
+    return (depot[ing.id] ?? 0) >= ing.quantity;
+  });
+}
+
+/**
+ * Return a depot patch that deducts one recipe's ingredients and credits the yield.
+ * Caller should dispatch `depot/bulk` with the result.
+ */
+export function craftOne(
+  itemId: string,
+  depot: Depot,
+  data: GameData,
+): Record<string, number> {
+  const item = data.itemMap[itemId];
+  if (!item?.ingredients?.length) return {};
+  const patch: Record<string, number> = {};
+  for (const ing of item.ingredients) {
+    patch[ing.id] = (depot[ing.id] ?? 0) - ing.quantity;
+  }
+  patch[itemId] = (depot[itemId] ?? 0) + (item.yield ?? 1);
+  return patch;
+}
+
+/**
+ * Return all non-chip craftable item IDs that appear in the plan's raw needs.
+ * Used by the "auto-detect" mode of the tri-state crafting button.
+ * Includes every craftable item you need, whether or not the depot covers it,
+ * so the user sees the crafting breakdown for everything in their goals.
+ */
+export function autoDetectCraftable(
+  plan: MaterialPlan,
+): string[] {
+  return plan.rows
+    .filter((row) => row.canCraft && row.id !== LMD_ID && row.id !== EXP_ID)
+    .filter((row) => (plan.raw[row.id] ?? 0) > 0)
+    .map((row) => row.id);
+}
+
+/**
+ * Return all non-chip craftable item IDs present in the game data.
+ */
+export function allCraftableIds(data: GameData): string[] {
+  return data.items
+    .filter((item) => (item.ingredients?.length ?? 0) > 0 && !isChip(item.name))
+    .map((item) => item.id);
+}
+
+/* ------------------------------------------------------------------ */
+/* Penguin Statistics planner export                                   */
 /* ------------------------------------------------------------------ */
 
 export interface PenguinStatsExport {

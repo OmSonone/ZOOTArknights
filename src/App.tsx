@@ -43,7 +43,7 @@ function DataGate({ children }: { children: React.ReactNode }) {
           <p className="hint">
             {error}
             <br />
-            Make sure the files in <code>public/data</code> are served alongside the app.
+            Please try refreshing the page. If the problem persists, the app may need to be redeployed.
           </p>
           <Button variant="primary" onClick={retry}>
             <Icon name="refresh" size={17} />

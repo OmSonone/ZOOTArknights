@@ -23,6 +23,7 @@ const defaultSettings: PlannerSettings = {
   includeCrafting: true,
   ignoreLmd: false,
   showBattleRecords: true,
+  craftingItems: [],
 };
 
 export const createDefaultState = (): AppState => ({
@@ -203,6 +204,9 @@ export function normalizeState(input: unknown): AppState {
       typeof rawSettings.showBattleRecords === "boolean"
         ? rawSettings.showBattleRecords
         : defaultSettings.showBattleRecords,
+    craftingItems: Array.isArray(rawSettings.craftingItems)
+      ? (rawSettings.craftingItems as unknown[]).filter((x): x is string => typeof x === "string")
+      : defaultSettings.craftingItems,
   };
 
   return { version: SAVE_VERSION, roster, goals, depot, profile, plannerSettings };

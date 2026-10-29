@@ -2,7 +2,7 @@
   "name": "zoot-arknights",
   "private": true,
   "description": "ZOOT (Zeroth Order Oil Tank) — a local-first Arknights roster, collection and material planner.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -231,8 +231,8 @@ export default function ImportPage() {
           <strong style={{ fontSize: "0.92rem" }}>Unofficial, use at your own risk</strong>
           <p className="hint" style={{ marginTop: 2 }}>
             ZOOT mimics the game login on your own machine. Logging in through Yostar signs the game client out, and
-            Hypergryph/Yostar have not approved tools like this. Your email and code only travel to{" "}
-            <code>localhost</code> and the official servers — no third party is involved.
+            Hypergryph/Yostar have not approved tools like this. Your email and code only travel to your device
+            and the official servers — no third party is involved.
           </p>
         </div>
       </section>

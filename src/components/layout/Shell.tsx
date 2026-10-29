@@ -5,6 +5,7 @@ import { Icon } from "../neu/Icon";
 import type { IconName } from "../neu/Icon";
 import { Button, IconButton } from "../neu/ui";
 import { useApp } from "../../state/store";
+import { useCloud } from "../../state/cloud";
 import { useTheme } from "../../state/theme";
 import { ZootMark } from "../common/ZootMark";
 
@@ -53,6 +54,8 @@ function useCounts() {
 function Sidebar() {
   const { owned, goals } = useCounts();
   const { theme, toggle } = useTheme();
+  const { status } = useCloud();
+  const syncLabel = status === "synced" || status === "syncing" ? "Cloud sync" : "Local save";
 
   return (
     <aside className="sidebar">
@@ -80,8 +83,11 @@ function Sidebar() {
           <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
         </Button>
         <div className="sidebar__meta">
-          <span>Local save</span>
-          <span className="num">v1</span>
+          <span>{syncLabel}</span>
+        </div>
+        <div className="sidebar__credit">
+          Inspired by{" "}
+          <a href="https://krooster.com" target="_blank" rel="noopener noreferrer">Krooster</a>
         </div>
       </div>
     </aside>

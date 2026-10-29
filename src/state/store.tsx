@@ -18,6 +18,8 @@ export type Action =
   | { type: "profile/patch"; patch: Partial<DoctorProfile> }
   | { type: "profile/support"; index: number; slot: SupportSlot | null }
   | { type: "settings/patch"; patch: Partial<PlannerSettings> }
+  | { type: "settings/craftToggle"; itemId: string }
+  | { type: "settings/craftSetAll"; itemIds: string[] }
   | {
       type: "import/apply";
       roster?: Roster;
@@ -81,6 +83,15 @@ function reducer(state: AppState, action: Action): AppState {
     }
     case "settings/patch":
       return { ...state, plannerSettings: { ...state.plannerSettings, ...action.patch } };
+    case "settings/craftToggle": {
+      const list = state.plannerSettings.craftingItems;
+      const next = list.includes(action.itemId)
+        ? list.filter((id) => id !== action.itemId)
+        : [...list, action.itemId];
+      return { ...state, plannerSettings: { ...state.plannerSettings, craftingItems: next } };
+    }
+    case "settings/craftSetAll":
+      return { ...state, plannerSettings: { ...state.plannerSettings, craftingItems: action.itemIds } };
     case "import/apply": {
       const profile = action.profile
         ? { ...action.profile, supports: action.supports ?? action.profile.supports }

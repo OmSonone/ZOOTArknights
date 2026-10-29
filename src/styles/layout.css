@@ -164,6 +164,22 @@
   color: var(--text-faint);
 }
 
+.sidebar__credit {
+  padding: 2px 6px 0;
+  font-size: 0.62rem;
+  color: var(--text-faint);
+}
+
+.sidebar__credit a {
+  color: var(--text-faint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sidebar__credit a:hover {
+  color: var(--text);
+}
+
 /* ---------- Main column ---------- */
 
 .shell__main {

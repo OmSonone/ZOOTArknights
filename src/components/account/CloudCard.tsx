@@ -24,8 +24,7 @@ export function CloudCard() {
       </div>
       {!enabled && (
         <p className="hint">
-          Cloud sync is off. Set <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> (see{" "}
-          <code>.env.example</code>) and restart to enable sign-in.
+          Cloud sync is not available on this instance.
         </p>
       )}
       {enabled && !user && (

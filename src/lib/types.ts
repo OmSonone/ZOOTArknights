@@ -1,4 +1,4 @@
-/** Game data + save-file types. Mirrors the shape of ak-roster's generated JSON. */
+/** Game data + save-file types. Based on ak-roster's generated JSON structure. */
 
 export interface Ingredient {
   id: string;
@@ -110,7 +110,7 @@ export type OpInfo = OperatorData & Operator;
 export type GoalKind = "elite" | "level" | "skill_level" | "mastery" | "module";
 
 /**
- * One planned target state for an operator, mirroring krooster GoalData.
+ * One planned target state for an operator, similar to Krooster's GoalData.
  * A single goal can cross promotions and set every dimension at once.
  * Missing fields mean "no target for that dimension".
  */
@@ -156,6 +156,8 @@ export interface PlannerSettings {
   includeCrafting: boolean;
   ignoreLmd: boolean;
   showBattleRecords: boolean;
+  /** Item IDs the user has opted to craft rather than farm. */
+  craftingItems: string[];
 }
 
 export interface AppState {

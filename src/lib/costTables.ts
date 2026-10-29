@@ -1,4 +1,4 @@
-// Ported verbatim from ak-roster (0BSD) src/util/changeOperator.ts
+// Based on ak-roster (0BSD) src/util/changeOperator.ts
 
 export const MAX_LEVEL_BY_RARITY = [
   [0],

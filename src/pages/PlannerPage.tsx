@@ -170,6 +170,9 @@ export default function PlannerPage() {
           settings={state.plannerSettings}
           goalCount={views.length}
           onSettingsChange={(patch) => dispatch({ type: "settings/patch", patch })}
+          onCraftToggle={(itemId) => dispatch({ type: "settings/craftToggle", itemId })}
+          onCraftSetAll={(itemIds) => dispatch({ type: "settings/craftSetAll", itemIds })}
+          onDepotBulk={(entries) => dispatch({ type: "depot/bulk", entries })}
           onAddGoal={() => openEditor(null)}
         />
       )}

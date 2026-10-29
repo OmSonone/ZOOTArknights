@@ -563,17 +563,26 @@
   transition: background var(--dur) var(--ease);
 }
 
+.mat-table--craft .mat-row {
+  grid-template-columns: 40px minmax(0, 1fr) 72px 74px 74px 74px;
+}
+
+.mat-table--craft .mat-row__head {
+  grid-template-columns: 40px minmax(0, 1fr) 72px 74px 74px 74px;
+}
+
 .mat-row:hover {
   background: var(--surface-raised);
 }
 
 .mat-row__icon {
+  position: relative;
   width: 40px;
   height: 40px;
   border-radius: 10px;
   background: var(--bg-sunken);
   box-shadow: var(--shadow-inset-sm);
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   place-items: center;
 }
@@ -635,18 +644,99 @@
   text-align: right;
 }
 
+/* Craft actions column */
+.mat-row__craft-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+
+.mat-craft-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  font-weight: 620;
+  cursor: pointer;
+  background: var(--bg-sunken);
+  color: var(--text-faint);
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+.mat-craft-btn:hover {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.mat-craft-btn.is-active {
+  background: var(--accent-surface);
+  color: var(--accent-text);
+}
+
+.mat-craft-btn--go {
+  background: var(--accent-surface);
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.mat-craft-btn--go:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.mat-craft-btn--go:not(:disabled):hover {
+  filter: brightness(1.1);
+}
+
+/* Wrench badge on the item icon */
+.mat-row__craft-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-surface);
+  color: var(--accent-text);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
 @media (max-width: 620px) {
   .mat-row,
   .mat-row__head {
     grid-template-columns: 36px minmax(0, 1fr) 62px 62px;
   }
 
-  .mat-row__cell:nth-child(4) {
+  .mat-table--craft .mat-row,
+  .mat-table--craft .mat-row__head {
+    grid-template-columns: 36px minmax(0, 1fr) 60px 62px 62px;
+  }
+
+  /* Hide the "Have" column on small screens */
+  .mat-row__head span:nth-last-child(2) {
     display: none;
   }
 
-  .mat-row__head span:nth-child(4) {
+  .mat-row .mat-row__cell:nth-last-child(2) {
     display: none;
+  }
+
+  .mat-row__craft-actions {
+    gap: 2px;
+  }
+
+  .mat-craft-btn {
+    padding: 3px 6px;
+    font-size: 0.64rem;
   }
 }
 
